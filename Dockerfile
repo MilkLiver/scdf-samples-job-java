@@ -1,11 +1,20 @@
-FROM registry.access.redhat.com/ubi8/ubi
+FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 
 MAINTAINER milkliver
 #ARG uid=0
 #ARG gid=0
-#USER 0
+USER 0
 
-#========================install rpms========================
+#========================Add fqdn to hosts========================
+
+echo "127.0.0.1 testhostname.domain" >> /etc/hosts
+
+#==========================Add resources==========================
+
+RUN mkdir -p /etc/opt/scdf
+ADD ./resources/* /etc/opt/scdf/
+
+#===========================install rpms==========================
 RUN mkdir /rpms
 WORKDIR /rpms
 ADD ./rpms /rpms
@@ -15,7 +24,7 @@ RUN java -version
 
 
 
-#========================add scdf executor and jobs========================
+#===================add scdf executor and jobs===================
 RUN mkdir /testfiles
 WORKDIR /testfiles
 
@@ -28,8 +37,8 @@ RUN chmod 777 -Rf /configs/execution.properties
 
 
 
-#========================run scdf========================
-#USER 1001
+#============================run scdf===========================
+USER 1001
 
 ENTRYPOINT ["/bin/java","-jar","-Dspring.config.location=/configs/execution.properties","/testfiles/executor.jar"]
 #CMD ["/bin/java","-jar","-Dspring.config.location=/configs/execution.properties","/testfiles/scdf-task01.jar"]
