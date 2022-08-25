@@ -5,6 +5,10 @@ MAINTAINER milkliver
 #ARG gid=0
 USER 0
 
+#========================Add fqdn to hosts========================
+
+RUN echo "192.168.50.135 broker" >> /etc/hosts
+
 #==========================Add resources==========================
 
 RUN mkdir -p /etc/opt/scdf
