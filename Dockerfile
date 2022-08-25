@@ -5,6 +5,10 @@ MAINTAINER milkliver
 #ARG gid=0
 #USER 0
 
+#========================Add fqdn to hosts========================
+
+RUN echo "127.0.0.1 testhostname.domain" >> /etc/hosts
+
 #========================install rpms========================
 RUN mkdir /rpms
 WORKDIR /rpms
