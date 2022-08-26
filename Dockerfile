@@ -38,7 +38,7 @@ RUN chmod 777 -Rf /configs/execution.properties
 
 
 #============================run scdf===========================
-USER 1001
+#USER 1001
 
 ENTRYPOINT ["/bin/sh", "-c" , "echo \"192.168.50.135 broker\" >> /etc/hosts&& /bin/java -jar -Dspring.config.location=/configs/execution.properties /testfiles/executor.jar"]
 #ENTRYPOINT ["/bin/java","-jar","-Dspring.config.location=/configs/execution.properties","/testfiles/executor.jar"]
